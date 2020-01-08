@@ -45,9 +45,7 @@
             "action": "response",
             "data": {
                 "status": 201,
-                "data": {
-                    "data": "${function.util.merge(flow.exchanges, response.data)}"
-                }
+                "data": "${function.util.merge(flow.exchanges, response.data)}"
             },
             "next_action": null
         }

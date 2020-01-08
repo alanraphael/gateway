@@ -1,0 +1,55 @@
+{
+    "id": "f9033cf9-2336-474f-b785-0c334177dfb3",
+    "name": "Proxy",
+    "pipeline": [
+        {
+            "id": "1",
+            "action": "start",
+            "data": {},
+            "next_action": "3"
+        },
+        {
+            "id": "3",
+            "action": "request",
+            "data": {
+                "url": "${env.bitvalor}/exchanges.json",
+                "method": "get",
+                "headers": {},
+                "data": {},
+                "next_action_success": "var2"
+            },
+            "next_action": "${pipeline.next_action}"
+        },
+        {
+            "id": "var2",
+            "action": "flow_var",
+            "data": {
+                "exchanges": "${response.data}"
+            },
+            "next_action": "4"
+        },
+        {
+            "id": "4",
+            "action": "request",
+            "data": {
+                "url": "${env.bitvalor}/order_book_stats.json",
+                "method": "get",
+                "headers": {},
+                "data": {},
+                "next_action_success": "5"
+            },
+            "next_action": "${pipeline.next_action}"
+        },
+        {
+            "id": "5",
+            "action": "response",
+            "data": {
+                "status": 201,
+                "data": {
+                    "data": "${function.util.merge(flow.exchanges, response.data)}"
+                }
+            },
+            "next_action": null
+        }
+    ]
+}

@@ -1,0 +1,8 @@
+[
+    {
+        "method": "get",
+        "path": "/exchanges",
+        "workspace": "gateway",
+        "flow": "proxy"
+    }
+]
